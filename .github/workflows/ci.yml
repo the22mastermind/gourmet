@@ -22,5 +22,6 @@ jobs:
         yarn install
 
     - name: Run unit and integration tests
+      uses: c-hive/gha-yarn-cache@v1
       run: |
         yarn test
