@@ -1,0 +1,29 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Unit and Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@master
+      - uses: c-hive/gha-yarn-cache@v1
+
+      - name: Install dependencies
+        run: |
+          yarn install
+
+      - name: Run unit and integration tests
+        run: |
+          yarn test
+
+      - name: Report coverage
+        run: |
+          yarn coverage
