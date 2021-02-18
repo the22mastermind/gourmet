@@ -8,7 +8,8 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint src/",
-    "pretest": "yarn lint"
+    "pretest": "yarn lint",
+    "coverage": "yarn codecov"
   },
   "dependencies": {
     "react": "16.13.1",

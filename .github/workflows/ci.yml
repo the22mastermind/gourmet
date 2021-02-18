@@ -23,3 +23,7 @@ jobs:
       - name: Run unit and integration tests
         run: |
           yarn test
+
+      - name: Report coverage
+        run: |
+          yarn coverage
