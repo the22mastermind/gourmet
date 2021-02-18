@@ -23,10 +23,3 @@ jobs:
     - name: Run unit and integration tests
       run: |
         yarn test
-    - name: Upload test coverage report to Codecov
-    - uses: codecov/codecov-action@v1
-      with:
-        directory: ./coverage/
-        flags: unittests
-        fail_ci_if_error: true
-        verbose: true
