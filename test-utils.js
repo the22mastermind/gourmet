@@ -1,9 +1,18 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import PaperProvider from 'react-native-paper/lib/commonjs/core/Provider';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { AuthProvider } from './src/context/AuthProvider';
+import { AlertProvider } from './src/context/AlertProvider';
+import theme from './src/context/theme';
 
 const AllTheProviders = ({ children }) => (
-  <PaperProvider>{children}</PaperProvider>
+  <AuthProvider>
+    <AlertProvider>
+      <PaperProvider theme={theme}>
+        {children}
+      </PaperProvider>
+    </AlertProvider>
+  </AuthProvider>
 );
 
 const customRender = (ui, options) =>
