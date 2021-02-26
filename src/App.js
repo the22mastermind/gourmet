@@ -1,40 +1,18 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: '#CCCCCC',
-  },
-  body: {
-    backgroundColor: '#F4F4F4',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: '#333333',
-  },
-});
+import { Provider as PaperProvider } from 'react-native-paper';
+import { AuthProvider } from './context/AuthProvider';
+import { AlertProvider } from './context/AlertProvider';
+import theme from './context/theme';
+import Routes from './navigation/Routes';
 
 const App = () => (
-  <>
-    <StatusBar barStyle="dark-content" />
-    <SafeAreaView>
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={styles.scrollView}>
-        <View style={styles.body}>
-          <Text style={styles.title}>Welcome</Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  </>
+  <AuthProvider>
+    <AlertProvider>
+      <PaperProvider theme={theme}>
+        <Routes />
+      </PaperProvider>
+    </AlertProvider>
+  </AuthProvider>
 );
 
 export default App;

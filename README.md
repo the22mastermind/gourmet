@@ -1,4 +1,4 @@
-![Build](https://github.com/actions/gourmet/workflows/Build/badge.svg?branch=main) [![codecov](https://codecov.io/gh/the22mastermind/gourmet/branch/main/graph/badge.svg)](https://codecov.io/gh/the22mastermind/gourmet)
+![Build](https://github.com/the22mastermind/gourmet/workflows/Continuous%20Integration/badge.svg) [![codecov](https://codecov.io/gh/the22mastermind/gourmet/branch/main/graph/badge.svg)](https://codecov.io/gh/the22mastermind/gourmet)
 
 # Gourmet
 Gourmet Online Food Ordering Mobile App
