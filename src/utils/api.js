@@ -3,7 +3,8 @@ import storage from './storage';
 
 const { getData } = storage;
 
-export const baseUrl = 'https://gourmetfood-api.herokuapp.com';
+// export const baseUrl = 'https://gourmetfood-api.herokuapp.com';
+export const baseUrl = 'http://192.168.0.53:4000';
 
 /**
  * @description Returns the api response
@@ -84,22 +85,6 @@ export const resendOTPService = async () => {
   }
 };
 
-export const loginService = async (payload) => {
-  try {
-    const { status, data } = await axios({
-      url: `${baseUrl}/api/auth/login`,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: payload,
-    });
-    return apiResponse(status, data, null);
-  } catch (error) {
-    return apiResponse(null, null, error);
-  }
-};
-
 export const logoutService = async () => {
   try {
     const token = await getToken();
@@ -109,6 +94,41 @@ export const logoutService = async () => {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
+      },
+    });
+    return apiResponse(status, data, null);
+  } catch (error) {
+    return apiResponse(null, null, error);
+  }
+};
+
+export const postService = async (url, method, payload) => {
+  try {
+    const token = await getToken();
+    const { status, data } = await axios({
+      url: `${baseUrl}${url}`,
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}` || '',
+      },
+      data: payload,
+    });
+    return apiResponse(status, data, null);
+  } catch (error) {
+    return apiResponse(null, null, error);
+  }
+};
+
+export const getService = async (url, method) => {
+  try {
+    const token = await getToken();
+    const { status, data } = await axios({
+      url: `${baseUrl}${url}`,
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}` || '',
       },
     });
     return apiResponse(status, data, null);

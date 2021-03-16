@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from 'react';
-import AlertReducer from './AlertReducer';
+import AlertReducer from './reducers/AlertReducer';
 
 const initialState = {
   alert: null,

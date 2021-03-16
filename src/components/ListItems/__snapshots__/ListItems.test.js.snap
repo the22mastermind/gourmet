@@ -1,0 +1,208 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ListItems /> component matches <ListItems /> component snapshot 1`] = `
+<View
+  collapsable={false}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        false,
+        Array [
+          Object {
+            "padding": 8,
+          },
+          undefined,
+        ],
+      ]
+    }
+    testID="Double Cheese Burger"
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+    >
+      <View
+        color="rgba(51, 51, 51, 0.54)"
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#a4c49a",
+              "borderRadius": 32,
+              "height": 64,
+              "width": 64,
+            },
+            Object {
+              "marginLeft": 0,
+              "marginRight": 16,
+            },
+          ]
+        }
+        testID="item-image"
+      >
+        <Image
+          source={
+            Object {
+              "cache": "force-cache",
+              "uri": "https://media.istockphoto.com/photos/delicious-fresh-cooked-burger-with-a-side-of-french-fries-picture-id177556385",
+            }
+          }
+          style={
+            Object {
+              "borderRadius": 32,
+              "height": 64,
+              "width": 64,
+            }
+          }
+        />
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "marginVertical": 6,
+              "paddingLeft": 8,
+            },
+            Object {
+              "flex": 1,
+              "justifyContent": "center",
+            },
+          ]
+        }
+      >
+        <Text
+          numberOfLines={1}
+          selectable={false}
+          style={
+            Array [
+              Object {
+                "color": "#333333",
+                "fontFamily": "System",
+                "fontWeight": "400",
+                "textAlign": "left",
+              },
+              Array [
+                Object {
+                  "fontSize": 16,
+                },
+                Object {
+                  "color": "rgba(51, 51, 51, 0.87)",
+                },
+                undefined,
+              ],
+            ]
+          }
+        >
+          Double Cheese Burger
+        </Text>
+        <Text
+          numberOfLines={2}
+          selectable={false}
+          style={
+            Array [
+              Object {
+                "color": "#333333",
+                "fontFamily": "System",
+                "fontWeight": "400",
+                "textAlign": "left",
+              },
+              Array [
+                Object {
+                  "fontSize": 14,
+                },
+                Object {
+                  "color": "rgba(51, 51, 51, 0.54)",
+                },
+                Object {
+                  "marginTop": 6,
+                },
+              ],
+            ]
+          }
+        >
+          This is a very tasty cheese burger.
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "flex-end",
+            "justifyContent": "space-evenly",
+            "marginLeft": 12,
+          }
+        }
+        testID="list-item-right-wrapper"
+      >
+        <Text
+          color="rgba(51, 51, 51, 0.54)"
+          style={
+            Array [
+              Object {
+                "color": "#333333",
+                "fontFamily": "System",
+                "fontWeight": "400",
+                "textAlign": "left",
+              },
+              Array [
+                Object {
+                  "color": "rgba(51, 51, 51, 0.54)",
+                  "fontFamily": "System",
+                  "fontWeight": "400",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                },
+                Array [
+                  Object {
+                    "fontSize": 12,
+                    "letterSpacing": 0.4,
+                    "lineHeight": 20,
+                    "marginVertical": 2,
+                  },
+                  Object {
+                    "marginRight": 0,
+                  },
+                ],
+              ],
+            ]
+          }
+          testID="list-item-right-top"
+        >
+          Large
+        </Text>
+        <Text
+          color="rgba(51, 51, 51, 0.54)"
+          style={
+            Object {
+              "color": "#a4c49a",
+              "fontSize": 16,
+              "fontWeight": "700",
+              "textTransform": "capitalize",
+            }
+          }
+          testID="list-item-right-bottom"
+        >
+          $6.5
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;

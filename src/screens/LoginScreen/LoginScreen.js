@@ -7,7 +7,7 @@ import CustomTitle from '../../components/CustomTitle/CustomTitle';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import validations from '../../utils/validations';
-import { loginService } from '../../utils/api';
+import { postService } from '../../utils/api';
 
 const { width } = Dimensions.get('screen');
 const { phoneNumber, password } = validations;
@@ -55,7 +55,7 @@ const LoginScreen = ({ navigation: { navigate } }) => {
 
   const onSubmit = async (data) => {
     setLoading(true);
-    const response = await loginService(data);
+    const response = await postService('/api/auth/login', 'POST', data);
     if (response. status !== 200) {
       await showAlert({
         type: 'error',

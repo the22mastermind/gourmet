@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from 'react';
-import AuthReducer from './AuthReducer';
+import AuthReducer from './reducers/AuthReducer';
 import storage from '../utils/storage';
 
 const { getData, storeData, clearAllData } = storage;

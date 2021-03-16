@@ -6,7 +6,6 @@ const theme = {
   colors: {
     ...DefaultTheme.colors,
     primary: '#a4c49a',
-    // accent: '#75936c',
     accent: '#f7f8f8',
     text: '#333333',
     error: '#f44336',

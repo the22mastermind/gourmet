@@ -12,7 +12,7 @@ module.exports = {
     path.join(__dirname),
   ],
   transformIgnorePatterns: [
-    'node_modules/(?!(jest-)?react-native|@react-native-community|react-navigation|@react-navigation|react-native-paper)',
+    'node_modules/(?!(jest-)?react-native|@react-native-community|react-navigation|@react-navigation|react-native-paper|react-native-stripe-payments|react-native-credit-card-input)',
   ],
   collectCoverage: true,
   collectCoverageFrom: ['src/**/**/*.js'],

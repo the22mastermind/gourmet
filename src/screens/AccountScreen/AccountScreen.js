@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const HomeScreen = () => {
+const AccountScreen = () => {
   const { logout } = useContext(AuthContext);
   const { showAlert } = useContext(AlertContext);
   const [loading, setLoading] = useState(false);
@@ -24,17 +24,17 @@ const HomeScreen = () => {
 
   const handleLogout = async () => {
     setLoading(true);
-    const response = await logoutService();
-    if (response.status !== 200) {
+    const { status, data, error } = await logoutService();
+    if (status !== 200) {
       await showAlert({
         type: 'error',
-        message: response.error,
+        message: error,
       });
       setLoading(false);
     } else {
       await showAlert({
         type: 'success',
-        message: response.data.message,
+        message: data.message,
       });
       setLoading(false);
       await logout();
@@ -42,8 +42,8 @@ const HomeScreen = () => {
   };
 
   return (
-    <View style={styles.container} accessibilityLabel="home-screen">
-      <CustomTitle text="Home screen" />
+    <View style={styles.container} accessibilityLabel="account-screen">
+      <CustomTitle text="Account screen" />
       <CustomButton
         testID="logout-button"
         label="Logout"
@@ -54,4 +54,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default AccountScreen;
