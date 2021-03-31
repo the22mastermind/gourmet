@@ -22,12 +22,12 @@ export const AuthProvider = ({children}) => {
   };
 
   const login = async (token, data) => {
+    await storeData('token', token);
+    await storeData('auth', data);
     dispatch({
       type: 'AUTH_LOGIN',
       payload: data,
     });
-    await storeData('token', token);
-    await storeData('auth', data);
   };
 
   const logout = async () => {

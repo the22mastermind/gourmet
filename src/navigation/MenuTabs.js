@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
+import PropTypes from 'prop-types';
 import { Tabs, TabScreen } from 'react-native-paper-tabs';
 import ListItems from '../components/ListItems/ListItems';
 import CustomCaption from '../components/CustomCaption/CustomCaption';
@@ -19,23 +20,17 @@ const styles = StyleSheet.create({
   },
 });
 
-const MenuTabs = () => {
-  const { cart, addToCart, updateCart, menuItems, getMenuItems } = useContext(DataContext);
+const MenuTabs = ({ menuItems, handleChangeIndex }) => {
+  const { cart, addToCart, updateCart } = useContext(DataContext);
   const { showAlert } = useContext(AlertContext);
 
-  const handleChange = async (index) => {
-    const id = index + 1;
-    await getMenuItems(id);
-  };
-
   const handleAddToCart = async (item) => {
-    console.log(typeof item, item);
     const itemInCart = cart.find(cartItem => cartItem.id === item.id);
     if (itemInCart) {
       const updatedItem = {
         id: itemInCart.id,
         name: itemInCart.name,
-        cost: itemInCart.cost + parseInt(item.cost, 10),
+        cost: itemInCart.cost + Number(item.cost),
         quantity: itemInCart.quantity + 1,
         image: itemInCart.image,
         size: itemInCart.size,
@@ -49,7 +44,7 @@ const MenuTabs = () => {
       const newItem = {
         id: item.id,
         name: item.name,
-        cost: parseInt(item.cost, 10),
+        cost: Number(item.cost),
         quantity: 1,
         image: item.image,
         size: item.size,
@@ -65,10 +60,11 @@ const MenuTabs = () => {
   return (
     <Tabs
       style={styles.tab}
-      onChangeIndex={(newIndex) => handleChange(newIndex)}
+      defaultIndex={0}
+      onChangeIndex={(newIndex) => handleChangeIndex(newIndex)}
     >
       <TabScreen label="Breakfast">
-        <View style={styles.tabScreen}>
+        <View style={styles.tabScreen} testID="breakfast-tab">
           {menuItems.length > 0 ? (
             <ListItems
               items={menuItems}
@@ -80,7 +76,7 @@ const MenuTabs = () => {
         </View>
       </TabScreen>
       <TabScreen label="Lunch/Dinner">
-        <View style={styles.tabScreen}>
+        <View style={styles.tabScreen} testID="lunch-dinner-tab">
           {menuItems.length > 0 ? (
             <ListItems
               items={menuItems}
@@ -92,7 +88,7 @@ const MenuTabs = () => {
         </View>
       </TabScreen>
       <TabScreen label="Drinks">
-        <View style={styles.tabScreen}>
+        <View style={styles.tabScreen} testID="drinks-tab">
           {menuItems.length > 0 ? (
             <ListItems
               items={menuItems}
@@ -105,6 +101,11 @@ const MenuTabs = () => {
       </TabScreen>
     </Tabs>
   );
+};
+
+MenuTabs.propTypes = {
+  menuItems: PropTypes.arrayOf(Object).isRequired,
+  handleChangeIndex: PropTypes.func.isRequired,
 };
 
 export default MenuTabs;

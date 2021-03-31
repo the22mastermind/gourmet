@@ -1,9 +1,11 @@
 import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { act, fireEvent, render } from 'test-utils';
 import AccountScreen from './AccountScreen';
+import AccountStack from '../../navigation/stacks/AccountStack';
 import { baseUrl } from '../../utils/api';
 
 const mockAxios = new MockAdapter(axios);
@@ -14,7 +16,11 @@ describe('<AccountScreen />', () => {
       user: {
         firstName: 'John',
         lastName: 'Doe',
-        role: 'admin',
+        phoneNumber: '+250731237410',
+        address: 'Kigali, Rwanda',
+        createdAt: new Date(),
+        Orders: [],
+        role: 'customer',
         status: true,
       },
     };
@@ -24,9 +30,15 @@ describe('<AccountScreen />', () => {
   });
 
   it('renders <HomeScreen /> correctly', async () => {
-    const screen = render(<AccountScreen />);
+    const screen = render(
+      <NavigationContainer>
+        <AccountStack />
+      </NavigationContainer>
+  );
   
-    expect(screen.queryByText('Account screen')).toBeTruthy();
+    expect(screen.queryByText('Name')).toBeTruthy();
+    expect(screen.queryByText('Phone')).toBeTruthy();
+    expect(screen.queryByText('Address')).toBeTruthy();
     expect(screen.getByTestId ('logout-button')).toBeTruthy();
   });
 

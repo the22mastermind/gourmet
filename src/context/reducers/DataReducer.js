@@ -9,7 +9,7 @@ export default (state, action) => {
       const category = state.menu.filter(item => item.name === action.payload);
       return {
         ...state,
-        menuItems: category[0].Items,
+        menuItems: category[0]?.Items ? category[0]?.Items : [],
       };
     }
     case 'ADD_TO_CART':

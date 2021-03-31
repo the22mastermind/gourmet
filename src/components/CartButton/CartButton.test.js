@@ -1,10 +1,8 @@
 import React from 'react';
-import { NavigationContainer} from '@react-navigation/native';
-import { render, fireEvent, waitForElementToBeRemoved } from 'test-utils';
+import { render } from 'test-utils';
 import CartButton from './CartButton';
 
-// eslint-disable-next-line jest/no-disabled-tests
-describe.skip('<CartButton /> component', () => {
+describe('<CartButton /> component', () => {
   it('renders <CartButton /> component correctly', () => {
     const screen = render(<CartButton items={2} />);
   
@@ -12,20 +10,7 @@ describe.skip('<CartButton /> component', () => {
     expect(screen.queryByText('2')).toBeDefined();
   });
   
-  it('should display cart contents correctly', async () => {
-    const screen = render(<NavigationContainer><CartButton items={2} /></NavigationContainer>);
-    
-    fireEvent.press(screen.getByTestId('cart-button'));
-  
-    await waitForElementToBeRemoved(() => {
-      expect(screen.getByTestId('cart-button')).toBeNull();
-      expect(screen.queryByText('2')).toBeNull();
-      expect(screen.queryByText('Your order')).toBeDefined();
-      expect(screen.getByTestId('close-bottom-sheet')).toBeDefined();
-    });
-  });
-  
-  it('matches <CartButton /> component snapshot', async () => {
+  it('matches <CartButton /> component snapshot', () => {
     const screen = render(<CartButton items={1} />);
   
     expect(screen.toJSON()).toMatchSnapshot();

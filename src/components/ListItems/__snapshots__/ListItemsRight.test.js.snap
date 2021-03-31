@@ -59,7 +59,7 @@ exports[`<ListItemsRight /> component matches <ListItemsRight /> component snaps
       style={
         Object {
           "color": "#a4c49a",
-          "fontSize": 16,
+          "fontSize": 14,
           "fontWeight": "700",
           "textTransform": "capitalize",
         }

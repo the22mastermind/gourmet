@@ -28,8 +28,7 @@ const HomeStack = () => {
 
   useEffect(() => {
     const fetchMenu = async () => {
-      const { status, data, error } = await getService('/api/menu', 'GET');
-      // console.log('MENU: ', status, data, error);
+      const { status, data, error } = await getService('/api/menu');
       if (status === 200) {
         await addMenu(data.data);
         setLoading(false);
@@ -45,7 +44,6 @@ const HomeStack = () => {
       }
     };
     fetchMenu();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return loading ? (

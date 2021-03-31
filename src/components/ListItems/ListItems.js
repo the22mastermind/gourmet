@@ -14,9 +14,9 @@ const ListItems = ({ items, handleItem }) => (
   items.map(item => (
     <List.Item
       key={item.id}
-      testID={item?.name || item?.paymentId}
-      title={item?.name || item?.paymentId}
-      description={item?.description || `${item?.Contents.length} items`}
+      testID={item?.id.toString()}
+      title={item?.name ? item?.name : `Order #${item?.id}`}
+      description={item?.description ? item?.description : `${item?.Contents?.length} items`}
       descriptionStyle={styles.description}
       left={props => item?.image ? (
         <Avatar.Image
@@ -30,8 +30,8 @@ const ListItems = ({ items, handleItem }) => (
       ) : null}
       right={props => (
         <ListItemsRight
-          top={item?.size ? item.size : item.createdAt.toLocaleString()}
-          bottom={item?.cost ? `$${item.cost}` : item.status}
+          top={item?.description ? item?.size : new Date(item?.createdAt).toDateString()}
+          bottom={item?.cost ? `$${item.cost}` : item?.status}
           {...props}
         />
       )}
