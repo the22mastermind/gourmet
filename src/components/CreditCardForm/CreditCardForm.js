@@ -1,6 +1,9 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
+import { LogBox, StyleSheet } from 'react-native';
 import { CreditCardInput } from 'react-native-credit-card-input';
+
+LogBox.ignoreLogs(['Warning: componentWillReceiveProps']);
 
 const styles = StyleSheet.create({
   label: {
@@ -17,18 +20,11 @@ const CreditCardForm = ({ onChange }) => (
     onChange={onChange}
     labelStyle={styles.label}
     inputStyle={styles.input}
-    additionalInputsProps={{
-      number: {
-        testID: 'number-card-input',
-      },
-      expiry: {
-        testID: 'expiry-card-input',
-      },
-      cvc: {
-        testID: 'cvc-card-input',
-      },
-    }}
   />
 );
+
+CreditCardForm.propTypes = {
+  onChange: PropTypes.func.isRequired,
+};
 
 export default CreditCardForm;

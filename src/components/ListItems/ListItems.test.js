@@ -21,7 +21,7 @@ describe('<ListItems /> component', () => {
   it('renders a menu <ListItems /> component correctly', () => {
     const screen = render(<ListItems {...menu} />);
   
-    expect(screen.getByTestId(menu.items[0].name)).toBeDefined();
+    expect(screen.getByTestId('2')).toBeDefined();
     expect(screen.queryByText('Double Cheese Burger')).toBeDefined();
     expect(screen.queryByText('This is a very tasty cheese burger.')).toBeDefined();
     expect(screen.getByTestId('item-image')).toBeDefined();
@@ -33,7 +33,7 @@ describe('<ListItems /> component', () => {
   it('calls the onPress event correctly', async () => {
     const screen = render(<ListItems {...menu} />);
 
-    fireEvent.press(screen.getByTestId(menu.items[0].name));
+    fireEvent.press(screen.getByTestId('2'));
   
     expect(menu.handleItem).toHaveBeenCalledWith(menu.items[0]);
   });

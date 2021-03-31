@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Caption } from 'react-native-paper';
 import { AuthContext } from '../../context/AuthProvider';
@@ -21,7 +21,19 @@ const styles = StyleSheet.create({
 
 const MainScreen = () => {
   const { auth } = useContext(AuthContext);
-  const { cart } = useContext(DataContext);
+  const { cart, menuItems, getMenuItems } = useContext(DataContext);
+
+  const handleChangeIndex = async (index) => {
+    const id = index + 1;
+    await getMenuItems(id);
+  };
+
+  useEffect(() => {
+    const initializeTabs = async () => {
+      await handleChangeIndex(0);
+    };
+    initializeTabs();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -29,7 +41,7 @@ const MainScreen = () => {
         <CustomTitle text={`Welcome, ${auth.firstName}`} />
         <Caption>{auth?.address}</Caption>
       </View>
-      <MenuTabs />
+      <MenuTabs menuItems={menuItems} handleChangeIndex={handleChangeIndex} />
       {cart.length > 0 ? <CartButton items={cart.length} /> : null}
     </View>
   );

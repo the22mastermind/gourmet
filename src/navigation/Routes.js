@@ -31,19 +31,14 @@ const Routes = () => {
       setLoading(false);
     };
     fetchAuthState();
-    return () => setLoading(false);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // return () => setLoading(false);
   }, []);
 
-  if (loading) {
-    return (
-      <View style={styles.container}>
-        <Loader />
-      </View>
-    );
-  }
-
-  return (
+  return loading ? (
+    <View style={styles.container}>
+      <Loader />
+    </View>
+  ) : (
     <NavigationContainer>
       <View style={styles.wrapper}>
         {auth ? <HomeStack /> : <AuthStack />}

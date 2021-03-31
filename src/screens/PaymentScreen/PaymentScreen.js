@@ -9,6 +9,7 @@ import Loader from '../../components/Loader/Loader';
 import CreditCardForm from '../../components/CreditCardForm/CreditCardForm';
 import PaymentCards from '../../assets/payment-cards.png';
 import { postService } from '../../utils/api';
+import cartParser from '../../utils/cart';
 
 const styles = StyleSheet.create({
   container: {
@@ -53,45 +54,51 @@ const PaymentScreen = ({ navigation: { navigate, reset }, route: { params } }) =
         setLoading(true);
         setShowCardForm(false);
         try {
-          const { status, data } = await postService('/api/payments', 'POST', { amount: params.total * 100 });
-          console.log('DATA::: ', status, data);
-          const { clientSecret } = data;
-          const res = await stripe.confirmPayment(clientSecret, cardDetails);
-          console.log('RESULT::: ', res);
-          if (res?.paymentMethodId) {
-            // Parse cart and remain with [itemId, itemName, cost, quantity]
-            const payload = {
-              total: params.total,
-              contents: cart,
-              paymentId: res.paymentMethodId,
-            };
-            const response = await postService('/api/orders', 'POST', payload);
-            if (response.status !== 201) {
-              await showAlert({
-                type: 'error',
-                message: response.error,
-              });
-              setLoading(false);
+          const { status, data, error } = await postService('/api/payments', { amount: params.total * 100 });
+          if (status !== 200) {
+            setLoading(false);
+            await showAlert({
+              type: 'error',
+              message: error,
+            });
+          } else {
+            const { clientSecret } = data.data;
+            const res = await stripe.confirmPayment(clientSecret, cardDetails);
+            if (res.id) {
+              const parsedCart = await cartParser(cart);
+              const payload = {
+                total: params.total,
+                contents: parsedCart,
+                paymentId: res.id,
+              };
+              const response = await postService('/api/orders', payload);
+              if (response.status !== 201) {
+                await showAlert({
+                  type: 'error',
+                  message: response.error,
+                });
+                setLoading(false);
+              } else {
+                const { message } = response.data;
+                await showAlert({
+                  type: 'success',
+                  message,
+                });
+                await clearCart();
+                setLoading(false);
+                reset({
+                  index: 0,
+                  routes: [
+                    { name: 'Home' },
+                  ],
+                });
+                navigate('Orders');
+              }
             } else {
-              const { message } = response.data;
-              await showAlert({
-                type: 'success',
-                message,
-              });
-              await clearCart();
               setLoading(false);
-              reset({
-                index: 0,
-                routes: [
-                  { name: 'Home' },
-                ],
-              });
-              navigate('Orders');
             }
           }
         } catch (error) {
-          console.log('ERROR: ', error.message);
-          console.log(error);
           setLoading(false);
           await showAlert({
             type: 'error',
@@ -118,7 +125,7 @@ const PaymentScreen = ({ navigation: { navigate, reset }, route: { params } }) =
         <Loader />
       ) : showCardForm ? <CreditCardForm onChange={handleCreditCardForm} /> : (
         <CustomButton
-          testID="checkout-button"
+          testID="pay-button"
           label={`Pay $${params?.total}`}
           modeValue="contained"
           onPress={() => handlePaymentInit()}

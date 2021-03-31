@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import OrdersListScreen from '../../screens/OrdersListScreen/OrdersListScreen';
+import OrderDetailsScreen from '../../screens/OrderDetailsScreen/OrderDetailsScreen';
 import customAnimation from '../../utils/customAnimation';
 
 const { Navigator, Screen } = createStackNavigator();
@@ -19,6 +20,11 @@ const OrdersStack = () => (
     <Screen
       name="Orders List"
       component={OrdersListScreen}
+      options={{ headerTitleAlign: 'center' }}
+    />
+    <Screen
+      name="Order Details"
+      component={OrderDetailsScreen}
       options={{ headerTitleAlign: 'center' }}
     />
   </Navigator>

@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Image, Dimensions, ScrollView, StyleSheet, View } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { AlertContext } from '../../context/AlertProvider';
 import CustomTitle from '../../components/CustomTitle/CustomTitle';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
+import logoImage from '../../assets/white-bg.png';
 import validations from '../../utils/validations';
-import { signupService } from '../../utils/api';
+import { postService } from '../../utils/api';
 import storage from '../../utils/storage';
 
-const { width } = Dimensions.get('screen');
+const { width, height } = Dimensions.get('screen');
 const {
   firstName,
   lastName,
@@ -21,6 +22,9 @@ const { storeData } = storage;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  innerContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -36,6 +40,10 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 4,
     borderColor: '#a4c49a',
+    marginVertical: 24,
+  },
+  image: {
+    height: height / 10,
   },
   title: {
     width: '100%',
@@ -56,7 +64,7 @@ const SignupScreen = ({ navigation: { reset } }) => {
 
   const onSubmit = async (data) => {
     setLoading(true);
-    const response = await signupService(data);
+    const response = await postService('/api/auth/signup', data);
     if (response. status !== 201) {
       await showAlert({
         type: 'error',
@@ -78,131 +86,140 @@ const SignupScreen = ({ navigation: { reset } }) => {
   };
 
   return (
-    <View style={styles.container} accessibilityLabel="signup-screen">
-      <View style={styles.title}>
-        <CustomTitle text="Create an account" />
+    <ScrollView>
+      <View style={styles.innerContainer} accessibilityLabel="signup-screen">
+        <Image
+          testID="logo-image"
+          source={logoImage}
+          style={styles.image}
+          resizeMethod="scale"
+          resizeMode="contain"
+        />
+        <View style={styles.formWrapper}>
+          <View style={styles.title}>
+            <CustomTitle text="Create an account" />
+          </View>
+          <View style={styles.formElement}>
+            <Controller
+              control={control}
+              render={({ onChange, onBlur, value }) => (
+                <CustomInput
+                  testID="firstname-input"
+                  label="First name"
+                  mode="outlined"
+                  placeholder="First name"
+                  keyboardType="default"
+                  value={value}
+                  onChangeText={val => onChange(val)}
+                  onBlur={onBlur}
+                  error={!!errors?.firstName}
+                  errorMessage={errors?.firstName?.message}
+                />
+              )}
+              name="firstName"
+              rules={firstName}
+              defaultValue=""
+            />
+          </View>
+          <View style={styles.formElement}>
+            <Controller
+              control={control}
+              render={({ onChange, onBlur, value }) => (
+                <CustomInput
+                  testID="lastname-input"
+                  label="Last name"
+                  mode="outlined"
+                  placeholder="Last name"
+                  keyboardType="default"
+                  value={value}
+                  onChangeText={val => onChange(val)}
+                  onBlur={onBlur}
+                  error={!!errors?.lastName}
+                  errorMessage={errors?.lastName?.message}
+                />
+              )}
+              name="lastName"
+              rules={lastName}
+              defaultValue=""
+            />
+          </View>
+          <View style={styles.formElement}>
+            <Controller
+              control={control}
+              render={({ onChange, onBlur, value }) => (
+                <CustomInput
+                  testID="phone-number-input"
+                  label="Phone number"
+                  mode="outlined"
+                  placeholder="Phone number"
+                  keyboardType="phone-pad"
+                  value={value}
+                  onChangeText={val => onChange(val)}
+                  onBlur={onBlur}
+                  error={!!errors?.phoneNumber}
+                  errorMessage={errors?.phoneNumber?.message}
+                />
+              )}
+              name="phoneNumber"
+              rules={phoneNumber}
+              defaultValue=""
+            />
+          </View>
+          <View style={styles.formElement}>
+            <Controller
+              control={control}
+              render={({ onChange, onBlur, value }) => (
+                <CustomInput
+                  testID="address-input"
+                  label="Address"
+                  mode="outlined"
+                  placeholder="Address"
+                  keyboardType="default"
+                  value={value}
+                  onChangeText={val => onChange(val)}
+                  onBlur={onBlur}
+                  error={!!errors?.address}
+                  errorMessage={errors?.address?.message}
+                />
+              )}
+              name="address"
+              rules={address}
+              defaultValue=""
+            />
+          </View>
+          <View style={styles.formElement}>
+            <Controller
+              control={control}
+              render={({ onChange, onBlur, value }) => (
+                <CustomInput
+                  testID="password-input"
+                  label="Password"
+                  mode="outlined"
+                  placeholder="Password"
+                  secureTextEntry
+                  value={value}
+                  onChangeText={val => onChange(val)}
+                  onBlur={onBlur}
+                  error={!!errors?.password}
+                  errorMessage={errors?.password?.message}
+                />
+              )}
+              name="password"
+              rules={password}
+              defaultValue=""
+            />
+          </View>
+          <View style={styles.formElement}>
+            <CustomButton
+              testID="signup-button"
+              label="Sign Up"
+              modeValue="contained"
+              onPress={handleSubmit(onSubmit)}
+              loading={loading} />
+          </View>
+        </View>
       </View>
-      <View style={styles.formWrapper}>
-        <View style={styles.formElement}>
-          <Controller
-            control={control}
-            render={({ onChange, onBlur, value }) => (
-              <CustomInput
-                testID="firstname-input"
-                label="First name"
-                mode="outlined"
-                placeholder="First name"
-                keyboardType="default"
-                value={value}
-                onChangeText={val => onChange(val)}
-                onBlur={onBlur}
-                error={!!errors?.firstName}
-                errorMessage={errors?.firstName?.message}
-              />
-            )}
-            name="firstName"
-            rules={firstName}
-            defaultValue=""
-          />
-        </View>
-        <View style={styles.formElement}>
-          <Controller
-            control={control}
-            render={({ onChange, onBlur, value }) => (
-              <CustomInput
-                testID="lastname-input"
-                label="Last name"
-                mode="outlined"
-                placeholder="Last name"
-                keyboardType="default"
-                value={value}
-                onChangeText={val => onChange(val)}
-                onBlur={onBlur}
-                error={!!errors?.lastName}
-                errorMessage={errors?.lastName?.message}
-              />
-            )}
-            name="lastName"
-            rules={lastName}
-            defaultValue=""
-          />
-        </View>
-        <View style={styles.formElement}>
-          <Controller
-            control={control}
-            render={({ onChange, onBlur, value }) => (
-              <CustomInput
-                testID="phone-number-input"
-                label="Phone number"
-                mode="outlined"
-                placeholder="Phone number"
-                keyboardType="phone-pad"
-                value={value}
-                onChangeText={val => onChange(val)}
-                onBlur={onBlur}
-                error={!!errors?.phoneNumber}
-                errorMessage={errors?.phoneNumber?.message}
-              />
-            )}
-            name="phoneNumber"
-            rules={phoneNumber}
-            defaultValue=""
-          />
-        </View>
-        <View style={styles.formElement}>
-          <Controller
-            control={control}
-            render={({ onChange, onBlur, value }) => (
-              <CustomInput
-                testID="address-input"
-                label="Address"
-                mode="outlined"
-                placeholder="Address"
-                keyboardType="default"
-                value={value}
-                onChangeText={val => onChange(val)}
-                onBlur={onBlur}
-                error={!!errors?.address}
-                errorMessage={errors?.address?.message}
-              />
-            )}
-            name="address"
-            rules={address}
-            defaultValue=""
-          />
-        </View>
-        <View style={styles.formElement}>
-          <Controller
-            control={control}
-            render={({ onChange, onBlur, value }) => (
-              <CustomInput
-                testID="password-input"
-                label="Password"
-                mode="outlined"
-                placeholder="Password"
-                secureTextEntry
-                value={value}
-                onChangeText={val => onChange(val)}
-                onBlur={onBlur}
-                error={!!errors?.password}
-                errorMessage={errors?.password?.message}
-              />
-            )}
-            name="password"
-            rules={password}
-            defaultValue=""
-          />
-        </View>
-        <View style={styles.formElement}>
-          <CustomButton
-            testID="signup-button"
-            label="Sign Up"
-            modeValue="contained"
-            onPress={handleSubmit(onSubmit)}
-            loading={loading} />
-        </View>
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 

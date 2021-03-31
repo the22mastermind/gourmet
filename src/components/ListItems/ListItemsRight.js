@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   bottom: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '700',
     color: '#a4c49a',
     textTransform: 'capitalize',

@@ -31,7 +31,7 @@ exports[`<ListItems /> component matches <ListItems /> component snapshot 1`] = 
         ],
       ]
     }
-    testID="Double Cheese Burger"
+    testID="2"
   >
     <View
       style={
@@ -192,7 +192,7 @@ exports[`<ListItems /> component matches <ListItems /> component snapshot 1`] = 
           style={
             Object {
               "color": "#a4c49a",
-              "fontSize": 16,
+              "fontSize": 14,
               "fontWeight": "700",
               "textTransform": "capitalize",
             }

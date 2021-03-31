@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { AuthContext } from '../../context/AuthProvider';
 import { AlertContext } from '../../context/AlertProvider';
 import CustomTitle from '../../components/CustomTitle/CustomTitle';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
+import logoImage from '../../assets/white-bg.png';
 import validations from '../../utils/validations';
 import { postService } from '../../utils/api';
 
-const { width } = Dimensions.get('screen');
+const { width, height } = Dimensions.get('screen');
 const { phoneNumber, password } = validations;
 
 const styles = StyleSheet.create({
@@ -29,7 +30,10 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 4,
     borderColor: '#a4c49a',
-    marginBottom: 24,
+    marginVertical: 24,
+  },
+  image: {
+    height: height / 10,
   },
   title: {
     width: '100%',
@@ -55,8 +59,8 @@ const LoginScreen = ({ navigation: { navigate } }) => {
 
   const onSubmit = async (data) => {
     setLoading(true);
-    const response = await postService('/api/auth/login', 'POST', data);
-    if (response. status !== 200) {
+    const response = await postService('/api/auth/login', data);
+    if (response.status !== 200) {
       await showAlert({
         type: 'error',
         message: response.error,
@@ -71,10 +75,17 @@ const LoginScreen = ({ navigation: { navigate } }) => {
 
   return (
     <View style={styles.container} accessibilityLabel="login-screen">
-      <View style={styles.title}>
-        <CustomTitle text="Login to continue" />
-      </View>
+      <Image
+        testID="logo-image"
+        source={logoImage}
+        style={styles.image}
+        resizeMethod="scale"
+        resizeMode="contain"
+      />
       <View style={styles.formWrapper}>
+        <View style={styles.title}>
+          <CustomTitle text="Login to continue" />
+        </View>
         <View style={styles.formElement} accessibilityLabel="phone-input-wrapper">
           <Controller
             control={control}
