@@ -11,10 +11,10 @@ Gourmet is an android mobile app that helps people to order food from Gourmet re
 ## Features
 
 - [x] Authentication (Sign Up, Login, and Logout)
-- [] View restaurant menu
-- [] Place order + Stripe Payment
-- [] View own orders list
-- [] View own single order
+- [x] View restaurant menu
+- [x] Place order + Stripe Payment
+- [x] View own orders list
+- [x] View own single order
 
 ## Technologies/tools used
 

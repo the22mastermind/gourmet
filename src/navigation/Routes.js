@@ -3,8 +3,8 @@ import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthContext } from '../context/AuthProvider';
 import { AlertContext } from '../context/AlertProvider';
-import AuthStack from './AuthStack';
-import HomeStack from './HomeStack';
+import AuthStack from './stacks/AuthStack';
+import HomeStack from './stacks/HomeStack';
 import Loader from '../components/Loader/Loader';
 import Alert from '../components/Alert/Alert';
 
@@ -31,19 +31,14 @@ const Routes = () => {
       setLoading(false);
     };
     fetchAuthState();
-    return () => setLoading(false);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // return () => setLoading(false);
   }, []);
 
-  if (loading) {
-    return (
-      <View style={styles.container}>
-        <Loader />
-      </View>
-    );
-  }
-
-  return (
+  return loading ? (
+    <View style={styles.container}>
+      <Loader />
+    </View>
+  ) : (
     <NavigationContainer>
       <View style={styles.wrapper}>
         {auth ? <HomeStack /> : <AuthStack />}

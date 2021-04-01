@@ -2,16 +2,19 @@ import React from 'react';
 import { render } from '@testing-library/react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { AuthProvider } from './src/context/AuthProvider';
+import { DataProvider } from './src/context/DataProvider';
 import { AlertProvider } from './src/context/AlertProvider';
 import theme from './src/context/theme';
 
 const AllTheProviders = ({ children }) => (
   <AuthProvider>
-    <AlertProvider>
-      <PaperProvider theme={theme}>
-        {children}
-      </PaperProvider>
-    </AlertProvider>
+    <DataProvider>
+      <AlertProvider>
+        <PaperProvider theme={theme}>
+          {children}
+        </PaperProvider>
+      </AlertProvider>
+    </DataProvider>
   </AuthProvider>
 );
 

@@ -30,16 +30,20 @@ const apiResponse = (status, data, error) => {
 const getToken = async () => {
   const token = await getData('token');
   const parsedToken = await JSON.parse(token);
+  // console.log('STORAGE: ', token);
+  // console.log('TOKEN: ', parsedToken);
   return parsedToken;
 };
 
-export const signupService = async (payload) => {
+export const postService = async (url, payload) => {
   try {
+    const token = await getToken();
     const { status, data } = await axios({
-      url: `${baseUrl}/api/auth/signup`,
+      url: `${baseUrl}${url}`,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}` || '',
       },
       data: payload,
     });
@@ -49,62 +53,11 @@ export const signupService = async (payload) => {
   }
 };
 
-export const verifyService = async (payload) => {
+export const getService = async (url) => {
   try {
     const token = await getToken();
     const { status, data } = await axios({
-      url: `${baseUrl}/api/auth/verify`,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      data: payload,
-    });
-    return apiResponse(status, data, null);
-  } catch (error) {
-    return apiResponse(null, null, error);
-  }
-};
-
-export const resendOTPService = async () => {
-  try {
-    const token = await getToken();
-    const { status, data } = await axios({
-      url: `${baseUrl}/api/auth/verify/retry`,
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return apiResponse(status, data, null);
-  } catch (error) {
-    return apiResponse(null, null, error);
-  }
-};
-
-export const loginService = async (payload) => {
-  try {
-    const { status, data } = await axios({
-      url: `${baseUrl}/api/auth/login`,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: payload,
-    });
-    return apiResponse(status, data, null);
-  } catch (error) {
-    return apiResponse(null, null, error);
-  }
-};
-
-export const logoutService = async () => {
-  try {
-    const token = await getToken();
-    const { status, data } = await axios({
-      url: `${baseUrl}/api/auth/logout`,
+      url: `${baseUrl}${url}`,
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

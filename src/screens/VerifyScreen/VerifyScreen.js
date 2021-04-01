@@ -5,7 +5,7 @@ import { AlertContext } from '../../context/AlertProvider';
 import CustomTitle from '../../components/CustomTitle/CustomTitle';
 import Loader from '../../components/Loader/Loader';
 import CustomButton from '../../components/CustomButton/CustomButton';
-import { verifyService, resendOTPService } from '../../utils/api';
+import { getService, postService } from '../../utils/api';
 import storage from '../../utils/storage';
 
 const { width, height } = Dimensions.get('screen');
@@ -78,7 +78,7 @@ const VerifyScreen = ({ navigation: { reset } }) => {
       setLoading(false);
     } else {
       const data = { otp: otpCode };
-      const response = await verifyService(data);
+      const response = await postService('/api/auth/verify', data);
       if (response. status !== 200) {
         await showAlert({
           type: 'error',
@@ -105,16 +105,16 @@ const VerifyScreen = ({ navigation: { reset } }) => {
 
   const resendCode = async () => {
     setLoading(true);
-    const response = await resendOTPService();
-    if (response. status !== 200) {
+    const { status, data, error } = await getService('/api/auth/verify/retry');
+    if (status !== 200) {
       await showAlert({
         type: 'error',
-        message: response.error,
+        message: error,
       });
     } else {
       await showAlert({
         type: 'info',
-        message: response.data.message,
+        message: data.message,
       });
     }
     setLoading(false);

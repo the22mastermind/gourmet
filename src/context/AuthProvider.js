@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from 'react';
-import AuthReducer from './AuthReducer';
+import AuthReducer from './reducers/AuthReducer';
 import storage from '../utils/storage';
 
 const { getData, storeData, clearAllData } = storage;
@@ -22,12 +22,12 @@ export const AuthProvider = ({children}) => {
   };
 
   const login = async (token, data) => {
+    await storeData('token', token);
+    await storeData('auth', data);
     dispatch({
       type: 'AUTH_LOGIN',
       payload: data,
     });
-    await storeData('token', token);
-    await storeData('auth', data);
   };
 
   const logout = async () => {

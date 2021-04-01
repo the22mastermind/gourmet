@@ -1,9 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from '../screens/LoginScreen/LoginScreen';
-import SignupScreen from '../screens/SignupScreen/SignupScreen';
-import VerifyScreen from '../screens/VerifyScreen/VerifyScreen';
-import customAnimation from '../utils/customAnimation';
+import LoginScreen from '../../screens/LoginScreen/LoginScreen';
+import SignupScreen from '../../screens/SignupScreen/SignupScreen';
+import VerifyScreen from '../../screens/VerifyScreen/VerifyScreen';
+import customAnimation from '../../utils/customAnimation';
 
 const { Navigator, Screen } = createStackNavigator();
 

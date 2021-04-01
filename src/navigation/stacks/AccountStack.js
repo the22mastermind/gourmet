@@ -1,13 +1,13 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from '../screens/HomeScreen/HomeScreen';
-import customAnimation from '../utils/customAnimation';
+import AccountScreen from '../../screens/AccountScreen/AccountScreen';
+import customAnimation from '../../utils/customAnimation';
 
 const { Navigator, Screen } = createStackNavigator();
 
-const HomeStack = () => (
+const AccountStack = () => (
   <Navigator
-    initialRouteName="Home"
+    initialRouteName="Account"
     headerMode="screen"
     screenOptions={{
       headerStyle: {
@@ -16,8 +16,12 @@ const HomeStack = () => (
       headerTintColor: '#ffffff',
       ...customAnimation,
     }}>
-    <Screen name="Home" component={HomeScreen} />
+    <Screen
+      name="Account"
+      component={AccountScreen}
+      options={{ headerTitleAlign: 'center' }}
+    />
   </Navigator>
 );
 
-export default HomeStack;
+export default AccountStack;

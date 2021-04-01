@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ListItemsRight /> component matches <ListItemsRight /> component snapshot 1`] = `
+<View
+  collapsable={false}
+  pointerEvents="box-none"
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "justifyContent": "space-evenly",
+        "marginLeft": 12,
+      }
+    }
+    testID="list-item-right-wrapper"
+  >
+    <Text
+      color="#333333"
+      style={
+        Array [
+          Object {
+            "color": "#333333",
+            "fontFamily": "System",
+            "fontWeight": "400",
+            "textAlign": "left",
+          },
+          Array [
+            Object {
+              "color": "rgba(51, 51, 51, 0.54)",
+              "fontFamily": "System",
+              "fontWeight": "400",
+              "textAlign": "left",
+              "writingDirection": "ltr",
+            },
+            Array [
+              Object {
+                "fontSize": 12,
+                "letterSpacing": 0.4,
+                "lineHeight": 20,
+                "marginVertical": 2,
+              },
+              undefined,
+            ],
+          ],
+        ]
+      }
+      testID="list-item-right-top"
+    >
+      large
+    </Text>
+    <Text
+      color="#333333"
+      style={
+        Object {
+          "color": "#a4c49a",
+          "fontSize": 14,
+          "fontWeight": "700",
+          "textTransform": "capitalize",
+        }
+      }
+      testID="list-item-right-bottom"
+    >
+      $4.5
+    </Text>
+  </View>
+</View>
+`;
