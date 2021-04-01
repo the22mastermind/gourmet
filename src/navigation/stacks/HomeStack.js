@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import customAnimation from '../../utils/customAnimation';
 import MainStack from './MainStack';
 import OrdersStack from './OrdersStack';
 import AccountStack from './AccountStack';
-import CustomCaption from '../../components/CustomCaption/CustomCaption';
+import Loader from '../../components/Loader/Loader';
 import { AuthContext } from '../../context/AuthProvider';
 import { DataContext } from '../../context/DataProvider';
 import { AlertContext } from '../../context/AlertProvider';
@@ -15,6 +15,12 @@ import { getService } from '../../utils/api';
 const { Navigator, Screen } = createMaterialBottomTabNavigator();
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 24,
+  },
   bar: {
     backgroundColor: '#f7f8f8',
   },
@@ -47,7 +53,9 @@ const HomeStack = () => {
   }, []);
 
   return loading ? (
-    <CustomCaption text="Loading the menu" />
+    <View style={styles.container}>
+      <Loader />
+    </View>
   ) : (
     <Navigator
       initialRouteName="Main"
