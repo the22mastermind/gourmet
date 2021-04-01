@@ -9,7 +9,6 @@ jest.mock('react-native-reanimated', () => {
   Reanimated.default.addWhitelistedNativeProps = () => {};
   return Reanimated;
 });
-jest.mock('@gorhom/bottom-sheet', () => require('react-native-reanimated/mock'));
 jest.mock('react-native-stripe-payments', () => {
   const stripe = {
     setOptions: () => {},

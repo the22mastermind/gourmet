@@ -1,26 +1,19 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Modal, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Avatar, Caption, IconButton, List, useTheme } from 'react-native-paper';
-import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { DataContext } from '../../context/DataProvider';
 import CustomTitle from '../CustomTitle/CustomTitle';
 import CustomButton from '../CustomButton/CustomButton';
 
-const { height } = Dimensions.get('screen');
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    minHeight: height / 2.5,
-    borderColor: '#f7f8f8',
-    borderWidth: 1,
-    borderRadius: 4,
+    flex: 1
   },
   content: {
     flex: 1,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
+    padding: 12,
+    backgroundColor: '#f7f8f8',
   },
   closeButtonWrapper: {
     display: 'flex',
@@ -61,7 +54,6 @@ const styles = StyleSheet.create({
 const Cart = ({ setVisibleCart }) => {
   const { cart, removeFromCart } = useContext(DataContext);
   const [total, setTotal] = useState(0);
-  const bottomSheetRef = useRef();
   const theme = useTheme();
   const { navigate } = useNavigation();
 
@@ -73,6 +65,7 @@ const Cart = ({ setVisibleCart }) => {
   const handleHideCart = () => setVisibleCart(false);
 
   const handlePayment = async () => {
+    setVisibleCart(false);
     navigate('Payment', { total });
   };
 
@@ -80,7 +73,7 @@ const Cart = ({ setVisibleCart }) => {
     await removeFromCart(id);
   };
 
-  const renderItem = ({ item }) => (
+  const renderCartItems = (data) => data.map((item) => (
     <List.Item
       key={item.id}
       testID="list-item"
@@ -107,14 +100,14 @@ const Cart = ({ setVisibleCart }) => {
       )}
       onPress={() => handleRemoveFromCart(item.id)}
     />
-  );
-
+  ));
+  
   return (
     <View style={styles.container}>
-      <BottomSheet
-        ref={bottomSheetRef}
-        snapPoints={['100%']}
-        index={0}
+      <Modal
+        animationType="slide"
+        visible
+        onRequestClose={handleHideCart}
       >
         <View style={styles.content}>
           <View style={styles.closeButtonWrapper}>
@@ -127,14 +120,9 @@ const Cart = ({ setVisibleCart }) => {
               onPress={() => handleHideCart()}
             />
           </View>
-          <BottomSheetFlatList
-            testID="bottom-sheet-flatlist"
-            data={cart}
-            keyExtractor={item => item.id.toString()}
-            showsVerticalScrollIndicator={false}
-            renderItem={renderItem}
-            style={styles.itemsWrapper}
-          />
+          <View style={styles.itemsWrapper}>
+            {renderCartItems(cart)}
+          </View>
           <View style={styles.totalWrapper}>
             <Text style={styles.total}>Total</Text>
             <Text style={styles.cost} testID="total-amount">
@@ -152,7 +140,7 @@ const Cart = ({ setVisibleCart }) => {
             />
           ) : null}
         </View>
-      </BottomSheet>
+      </Modal>
     </View>
   );
 };

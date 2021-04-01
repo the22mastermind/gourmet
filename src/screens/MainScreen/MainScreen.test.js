@@ -138,5 +138,54 @@ describe('<MainScreen />', () => {
     expect(within(screen.getByTestId('snackbar')).queryByText('Cart updated successfully')).toBeTruthy();
     expect(screen.getByTestId('cart-button')).toBeTruthy();
     expect(within(screen.getByTestId('cart-button')).queryByText('1')).toBeTruthy();
+
+    // Show cart
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('cart-button'));
+    });
+
+    // cart contents should be visible
+    expect(screen.queryByText('Your order')).toBeTruthy();
+    expect(screen.queryByText('2 x French Omelette De Fromage')).toBeTruthy();
+    expect(screen.queryByText('Pay $8')).toBeTruthy();
+
+    // Close cart
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('close-bottom-sheet'));
+    });
+
+    // cart contents should NOT be visible
+    expect(screen.queryByText('Your order')).toBeFalsy();
+    expect(screen.queryByText('2 x French Omelette De Fromage')).toBeFalsy();
+    expect(screen.queryByText('Pay $8')).toBeFalsy();
+
+    // Cart button should be visible again
+    expect(screen.getByTestId('cart-button')).toBeTruthy();
+
+    // Show cart
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('cart-button'));
+    });
+
+    // Remove item from cart
+    await act(async () => {
+      fireEvent.press(screen.queryByText('2 x French Omelette De Fromage'));
+    });
+
+    // Cart should be closed and menu should be visible
+    expect(within(screen.getByTestId('breakfast-tab')).queryByText('French Omelette De Fromage')).toBeTruthy();
+
+    // Add item to cart, open cart and navigate to payment screen
+    await act(async () => {
+      fireEvent.press(within(screen.getByTestId('breakfast-tab')).queryByText('French Omelette De Fromage'));
+    });
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('cart-button'));
+    });
+    await act(async () => {
+      fireEvent.press(screen.queryByText('Pay $4'));
+    });
+    screen.update(<Routes />);
+    expect(screen.queryByText('Confirm your order')).toBeTruthy();
   });
 });
